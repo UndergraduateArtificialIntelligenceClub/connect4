@@ -16,6 +16,10 @@ class Cell():
         else:
             return 'O'
 
+    def changeState(self, newState):
+        if self.state == 0:
+            self.state = newState
+
 
 class Board():
     def __init__(self):
@@ -24,8 +28,20 @@ class Board():
 
     def getBoard(self):
         # renders the board
+        print('\n\n')
         for row in self.cells:
             print('|', end='')
             for col in row:
                 print(col.printState(), end='|')
             print('\n', end='')
+
+    def play(self, turn, column):
+        found = False
+        row = len(self.cells) - 1
+        while row >= 0 and not found:
+            cell = self.cells[row][column]
+            if cell.getState() == 0:
+                cell.changeState(turn)
+                found = True
+            else:
+                row -= 1
