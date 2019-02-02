@@ -1,26 +1,3 @@
-class Cell():
-    def __init__(self):
-        # state = 0: empty
-        # state = 1: player1
-        # state = 2: player2
-        self.state = 0
-
-    def getState(self):
-        return self.state
-
-    def printState(self):
-        if self.state == 0:
-            return '_'
-        elif self.state == 1:
-            return 'X'
-        else:
-            return 'O'
-
-    def changeState(self, newState):
-        if self.state == 0:
-            self.state = newState
-
-
 class Board():
     def __init__(self):
         # creates 7x6 connect4 list of cells
