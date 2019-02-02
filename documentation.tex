@@ -1,71 +1,119 @@
-% !TEX TS-program = pdflatex
-% !TEX encoding = UTF-8 Unicode
+\documentclass[12pt]{article}
 
-% This is a simple template for a LaTeX document using the "article" class.
-% See "book", "report", "letter" for other types of document.
-
-\documentclass[12pt]{article} % use larger type; default would be 10pt
-
-\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
-
-%%% Examples of Article customizations
-% These packages are optional, depending whether you want the features they provide.
-% See the LaTeX Companion or other references for full information.
+\usepackage[utf8]{inputenc}
 
 %%% PAGE DIMENSIONS
-\usepackage{geometry} % to change the page dimensions
-\geometry{letterpaper} % or letterpaper (US) or a5paper or....
-% \geometry{margin=2in} % for example, change the margins to 2 inches all round
-% \geometry{landscape} % set up the page for landscape
-%   read geometry.pdf for detailed page layout information
+\usepackage{geometry}
+\geometry{letterpaper}
 
-\usepackage{graphicx} % support the \includegraphics command and options
-
-% \usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
 
 %%% PACKAGES
-\usepackage{booktabs} % for much better looking tables
-\usepackage{array} % for better arrays (eg matrices) in maths
-\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
-\usepackage{subfig} % make it possible to include more than one captioned figure/table in a single float
-% These packages are all incorporated in the memoir class to one degree or another...
+\usepackage{listings}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{verbatim}
+\usepackage{subfig}
 
 %%% HEADERS & FOOTERS
-\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
-\pagestyle{fancy} % options: empty , plain , fancy
-\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
 \lhead{}\chead{}\rhead{}
 \lfoot{}\cfoot{\thepage}\rfoot{}
 
-%%% SECTION TITLE APPEARANCE
-% \usepackage{sectsty}
-% \allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
-% (This matches ConTeXt defaults)
-
 %%% END Article customizations
 
-%%% The "real" document content comes below...
-
 \title{Connect 4 Terminal Game Documentation}
-\author{Giancarlo}
-%\date{} % Activate to display a given date or no date (if empty),
-         % otherwise the current date is printed 
+\author{Giancarlo Pernudi}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breaklines=true,
+    keepspaces=true,
+    numbersep=5pt,
+}
+\lstset{style=mystyle}
 
 \begin{document}
 \maketitle
 
 \section{Cell Class}
 
-This class is simply a cell on a cnnect 4 board where a token would be. It can only have 3 values:
-\\0: empty
-\\1: player 1's token
-\\2: player 2's token
+This class is simply a cell on a connect 4 board where a token would be. It can only have 3 values:
+\begin{itemize}
+  \item 0: empty
+  \item 1: player 1's token
+  \item 2: player 2's token
+\end{itemize}
+
 
 The Class has the following methods:
-method1()
+\begin{lstlisting}[language=Python]
+getState() # returns the integer value of the cell
+printState() # returns a character representation of the cell: _, X, O
+changeState() # changes the value of the cell only if it's has the value of 0 when called
+\end{lstlisting}
 
-\subsection{A subsection}
+\section{Board Class}
 
-More text.
+This class is the board, and where all the interaction will flow through. It has the following variables:
+\begin{itemize}
+  \item cells: a 2d array of cells (7x6)
+  \item turn: dictates which player's turn it is
+  \item players: a list of length 2 which stores the player objects
+\end{itemize}
+
+
+The Class has the following methods:
+\begin{lstlisting}[language=Python]
+getBoard() # prints out a graphical representation of the board
+changeTurn() # alternates the turn between 1 and 2
+play() # takes as input the index of column and plays
+checkWin() # checks for possible win by calling the following four methods:
+rowWin() # horizontal
+colWin() # vertical
+diagWin1() # \
+diagWin2() # /
+restart() # resets the board for a new game
+\end{lstlisting}
+
+\section{HumanPlayer Class}
+
+This class is an actual human player. It has the following variables:
+\begin{itemize}
+  \item can't think of a necessary variable atm
+\end{itemize}
+
+
+The Class has the following methods:
+\begin{lstlisting}[language=Python]
+getInput() # asks for a play from the player and will only accept a valid response. Will ask again if necessary. 
+\end{lstlisting}
+
+\section{ComputerPlayer Class}
+
+This class is an actual human player. It has the following variables:
+\begin{itemize}
+  \item difficulty: how smart or dumb this computer will play
+\end{itemize}
+
+
+The Class has the following methods:
+\begin{lstlisting}[language=Python]
+getPlayDumb() # will play randomly
+getPlaySmart() # takes an integer as input to decide how far to search with a minmax algorithm
+\end{lstlisting}
 
 \end{document}
