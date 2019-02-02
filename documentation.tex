@@ -49,28 +49,28 @@
 \begin{document}
 \maketitle
 
-\section{Cell Class}
+% \section{Cell Class}
 
-This class is simply a cell on a connect 4 board where a token would be. It can only have 3 values:
-\begin{itemize}
-  \item 0: empty
-  \item 1: player 1's token
-  \item 2: player 2's token
-\end{itemize}
+% This class is simply a cell on a connect 4 board where a token would be. It can only have 3 values:
+% \begin{itemize}
+%   \item 0: empty
+%   \item 1: player 1's token
+%   \item 2: player 2's token
+% \end{itemize}
 
 
-The Class has the following methods:
-\begin{lstlisting}[language=Python]
-getState() # returns the integer value of the cell
-printState() # returns a character representation of the cell: _, X, O
-changeState() # changes the value of the cell only if it's has the value of 0 when called
-\end{lstlisting}
+% The Class has the following methods:
+% \begin{lstlisting}[language=Python]
+% getState() # returns the integer value of the cell
+% printState() # returns a character representation of the cell: _, X, O
+% changeState() # changes the value of the cell only if it's has the value of 0 when called
+% \end{lstlisting}
 
 \section{Board Class}
 
 This class is the board, and where all the interaction will flow through. It has the following variables:
 \begin{itemize}
-  \item cells: a 2d array of cells (7x6)
+  \item state: a 2d array of integers representing the current game state (6x7)
   \item turn: dictates which player's turn it is
   \item players: a list of length 2 which stores the player objects
 \end{itemize}
@@ -78,6 +78,7 @@ This class is the board, and where all the interaction will flow through. It has
 
 The Class has the following methods:
 \begin{lstlisting}[language=Python]
+show() # prints game state to terminal
 getBoard() # prints out a graphical representation of the board
 changeTurn() # alternates the turn between 1 and 2
 play() # takes as input the index of column and plays
@@ -89,31 +90,31 @@ diagWin2() # /
 restart() # resets the board for a new game
 \end{lstlisting}
 
+\pagebreak
+
 \section{HumanPlayer Class}
 
-This class is an actual human player. It has the following variables:
-\begin{itemize}
-  \item can't think of a necessary variable atm
-\end{itemize}
+%This class is an actual human player. It has the following variables:
+%\begin{itemize}
+%  \item can't think of a necessary variable atm
+%\end{itemize}
 
-
-The Class has the following methods:
+This class is an actual human player. The Class has the following methods:
 \begin{lstlisting}[language=Python]
 getInput() # asks for a play from the player and will only accept a valid response. Will ask again if necessary. 
 \end{lstlisting}
 
 \section{ComputerPlayer Class}
 
-This class is an actual human player. It has the following variables:
+This class is the computer player, with various playing algorithms. It has the following variables:
 \begin{itemize}
   \item difficulty: how smart or dumb this computer will play
 \end{itemize}
 
-
 The Class has the following methods:
 \begin{lstlisting}[language=Python]
-getPlayDumb() # will play randomly
-getPlaySmart() # takes an integer as input to decide how far to search with a minmax algorithm
+getPlayDumb() # will make a random move
+getPlaySmart() # tries to pick the best possible move
 \end{lstlisting}
 
 \end{document}
