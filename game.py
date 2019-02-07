@@ -33,7 +33,7 @@ class Board():
                 row -= 1
 
     def checkWin(self):
-        return self.rowWin() or self.colWin()
+        return self.rowWin() or self.colWin() or self.diagWin()
 
     def rowWin(self):
         for row in self.cells:
@@ -47,4 +47,21 @@ class Board():
             for row in range(len(self.cells) - 3):
                 if self.cells[row][col] == self.turn and self.cells[row + 1][col] == self.turn and self.cells[row + 2][col] == self.turn and self.cells[row + 3][col] == self.turn:
                     return True
+        return False
+
+    # Check diagonal wins, returns true if current player won, false otherwise
+    def diagWin(self):
+        # top-left to bottom-right
+        for row in range(3):
+            for col in range(4):
+                if self.cells[row][col] == self.cells[row+1][col+1] == self.cells[row+2][col+2] == self.cells[row+3][col+3] == self.turn:
+                    return True
+        
+        # top-right to bottom-left
+        for row in range(3):
+            for col in range(6, 2, -1):
+                if self.cells[row][col] == self.cells[row+1][col-1] == self.cells[row+2][col-2] == self.cells[row+3][col-3] == self.turn:
+                    return True
+        
+        # no win
         return False
