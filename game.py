@@ -6,9 +6,12 @@ class Board():
         self.turn = 1
         self.characters = [' ', 'X', 'O']
 
+    def displayPlayer(self):
+        print("player {:d} ({:s})".format(self.turn, self.characters[self.turn]))
+
+
     def getBoard(self):
         # renders the board
-        print("player %d (%s)" % (self.turn, self.characters[self.turn]))
         for row in self.cells:
             print('|', end='')
             for cell in row:
@@ -16,6 +19,8 @@ class Board():
             print('\n', end='')
 
     def changeTurn(self):
+        # Changes the turns 
+        # of the players
         if self.turn == 1:
             self.turn = 2
         elif self.turn == 2:
