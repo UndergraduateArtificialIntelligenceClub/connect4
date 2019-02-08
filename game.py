@@ -31,10 +31,10 @@ class Board():
             else:
                 row -= 1
 
-    def isEmpty(self):
+    def isFull(self):
         for row in self.cells:
             for col in row:
-                if col in (1, 2):
+                if col == 0:
                     return False
         return True
 
