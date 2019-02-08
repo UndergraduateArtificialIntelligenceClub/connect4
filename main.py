@@ -4,13 +4,20 @@ b = Board()
 
 # only for testing purposes
 while True:
-    print('\n\n\n')
     b.displayPlayer()
-    b.play(int(input("choose column (1-7): ")) - 1)
-    b.getBoard()
-    if b.checkWin():
-        print('player %i won' % b.turn)
-        b.restart()
+    try:
+        col = input("choose column (1-7): ")
+        col = int(col)
+        assert 0 < col and col < 8
+    except:
+        print("please enter a number from 1 to 7")
     else:
-        print('player %i played' % b.turn)
-        b.changeTurn()
+        b.play(int(col) - 1)
+        b.getBoard()
+        if b.checkWin():
+            print('player %i won' % b.turn)
+            b.restart()
+        else:
+            print('player %i played' % b.turn)
+            b.changeTurn()
+        print('\n\n\n')
