@@ -10,6 +10,7 @@ while True:
     b.getBoard()
     if b.checkWin():
         print('player %i won' % b.turn)
-        quit()
-    b.changeTurn()
-    print('player %i played' % b.turn)
+        b.restart()
+    else:
+        b.changeTurn()
+        print('player %i played' % b.turn)

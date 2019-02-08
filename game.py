@@ -4,7 +4,6 @@ class Board():
         self.cells = [[0 for i in range(7)] for j in range(6)]
         # player1 starts first
         self.turn = 1
-
         self.characters = [' ', 'X', 'O']
 
     def getBoard(self):
@@ -32,6 +31,19 @@ class Board():
             else:
                 row -= 1
 
+    def isEmpty(self):
+        for row in self.cells:
+            for col in row:
+                if col in (1, 2):
+                    return False
+        return True
+
+    def restart(self):
+        # player1 starts first
+        self.turn = 1
+        # resets 7x6 grid to all 0
+        self.cells = [[0 for i in range(7)] for j in range(6)]
+
     def checkWin(self):
         return self.rowWin() or self.colWin() or self.diagWin()
 
@@ -54,14 +66,14 @@ class Board():
         # top-left to bottom-right
         for row in range(3):
             for col in range(4):
-                if self.cells[row][col] == self.cells[row+1][col+1] == self.cells[row+2][col+2] == self.cells[row+3][col+3] == self.turn:
+                if self.cells[row][col] == self.cells[row + 1][col + 1] == self.cells[row + 2][col + 2] == self.cells[row + 3][col + 3] == self.turn:
                     return True
-        
+
         # top-right to bottom-left
         for row in range(3):
             for col in range(6, 2, -1):
-                if self.cells[row][col] == self.cells[row+1][col-1] == self.cells[row+2][col-2] == self.cells[row+3][col-3] == self.turn:
+                if self.cells[row][col] == self.cells[row + 1][col - 1] == self.cells[row + 2][col - 2] == self.cells[row + 3][col - 3] == self.turn:
                     return True
-        
+
         # no win
         return False
