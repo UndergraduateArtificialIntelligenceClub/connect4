@@ -12,5 +12,5 @@ while True:
         print('player %i won' % b.turn)
         b.restart()
     else:
-        b.changeTurn()
         print('player %i played' % b.turn)
+        b.changeTurn()
