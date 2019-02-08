@@ -3,10 +3,10 @@ from game import Board
 b = Board()
 
 # only for testing purposes
-endProgram = False
-endGame = False
-while not endProgram:
-    while not endGame:
+continueProgram = True
+continueGame = True
+while continueProgram:
+    while continueGame:
         b.displayPlayer()
         try:
             col = input("choose column (1-7): ")
@@ -19,7 +19,7 @@ while not endProgram:
             b.getBoard()
             if b.checkWin():
                 print('player %i won' % b.turn)
-                b.restart()
+                continueGame = False
             else:
                 print('player %i played' % b.turn)
                 b.changeTurn()
@@ -29,5 +29,9 @@ while not endProgram:
     while end.upper() not in ['Y', 'N']:
         end = input("Would you like to play again (Y/N)? ")
     if end.upper() == 'N':
-        endProgram = False
+        continueProgram = False
+        print("Thanks for playing!")
+    else:
+        continueGame = True
+        b.restart()
 
