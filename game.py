@@ -8,6 +8,7 @@ class Board():
 
     def getBoard(self):
         # renders the board
+        print("player %d (%s)" % (self.turn, self.characters[self.turn]))
         for row in self.cells:
             print('|', end='')
             for cell in row:
