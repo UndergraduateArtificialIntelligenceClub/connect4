@@ -1,5 +1,4 @@
 from game import Board
-from random import randint
 
 b = Board()
 
