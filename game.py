@@ -77,3 +77,9 @@ class Board():
 
         # no win
         return False
+
+    def colFull(self):
+        fullList = []
+        for col in range(7):
+            fullList.append(self.cells[0][col] != 0)
+        return fullList

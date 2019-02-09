@@ -7,6 +7,7 @@ while True:
     print('\n\n\n')
     b.play(int(input("choose column (1-7): ")) - 1)
     b.getBoard()
+    print(b.colFull())
     if b.checkWin():
         print('player %i won' % b.turn)
         b.restart()

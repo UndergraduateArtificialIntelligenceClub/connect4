@@ -7,5 +7,5 @@ class DumbBot():
         # used to recognize which token is the bot's and which are not
         self.player = player
 
-    def play(self):
+    def play(self, colList):
         pass
