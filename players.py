@@ -2,10 +2,8 @@ from random import randint
 
 
 class DumbBot():
-    def __init__(self, player):
-        # self.player is the number of the changeTurn
-        # used to recognize which token is the bot's and which are not
-        self.player = player
+    def __init__(self):
+        pass
 
     def play(self, colList):
-        pass
+        return randint(0, len(colList) - 1)
