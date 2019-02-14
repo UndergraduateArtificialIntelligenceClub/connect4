@@ -6,20 +6,30 @@ class Board():
         self.turn = 1
         self.characters = [' ', 'X', 'O']
 
-    def getBoard(self):
+    def displayPlayer(self):
+        print("player {:d} ({:s})".format(
+            self.turn, self.characters[self.turn]))
+
+    def displayBoard(self):
         # renders the board
-        print("player %d (%s)" % (self.turn, self.characters[self.turn]))
         for row in self.cells:
             print('|', end='')
             for cell in row:
                 print(self.characters[cell], end='|')
             print('\n', end='')
 
+    def getBoard(self):
+        return self.cells
+
     def changeTurn(self):
+        # Changes the turn of the players
         if self.turn == 1:
             self.turn = 2
         elif self.turn == 2:
             self.turn = 1
+
+    def getTurn(self):
+        return self.turn
 
     def play(self, column):
         found = False
@@ -78,3 +88,12 @@ class Board():
 
         # no win
         return False
+
+    def colNotFull(self):
+        # True: full
+        # False: not full
+        notFullList = []
+        for col in range(7):
+            if self.cells[0][col] == 0:
+                notFullList.append(col)
+        return notFullList

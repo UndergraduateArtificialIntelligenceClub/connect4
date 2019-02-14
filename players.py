@@ -3,13 +3,11 @@ from copy import deepcopy
 
 
 class DumbBot():
-    def __init__(self, player):
-        # self.player is the number of the changeTurn
-        # used to recognize which token is the bot's and which are not
-        self.player = player
-
-    def play(self):
+    def __init__(self):
         pass
+
+    def play(self, colList):
+        return randint(0, len(colList) - 1)
 
 class Minimax():
     def __init__(self, player):
@@ -111,6 +109,7 @@ class Minimax():
                 return state
             else:
                 row -= 1
+
 
 if __name__ == "__main__":
     state = [[0 for i in range(7)] for j in range(6)]
