@@ -7,6 +7,7 @@ class Board():
         self.characters = [' ', 'X', 'O']
 
     def displayPlayer(self):
+        # returns formatted of information of the current player's turn and their token character
         print("player {:d} ({:s})".format(
             self.turn, self.characters[self.turn]))
 
