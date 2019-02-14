@@ -10,12 +10,17 @@ class DumbBot():
         # chooses a random column to play from the choices given
         return randint(0, len(colList) - 1)
 
+
 class Minimax():
+    # bot that uses minmax algorithm to play
     def __init__(self, player):
+        # to keep track how many times minimax function is called
         self.count = 0
+        # variable to know which player bot is
         self.player = player
 
     def play(self, state, depth):
+        # returns the best play returned by the Minimax algorithm
         return self.minimax(state, depth, self.player, True)
 
     def minimax(self, state, depth, turn, first_call):
@@ -34,10 +39,10 @@ class Minimax():
                 print("This shouldn't happen")
 
             new_state = self.getNewState(deepcopy(state), move, turn)
-            
+
             score = self.minimax(new_state, depth + 1, 3 - turn, False)
             scores.append(score)
-        
+
         if first_call:
             print(moves)
             print(scores)
@@ -61,7 +66,7 @@ class Minimax():
             for col in range(4):
                 if state[row][col] == state[row][col + 1] == state[row][col + 2] == state[row][col + 3] and state[row][col] == player:
                     return True
-    
+
         for col in range(7):
             for row in range(3):
                 if state[row][col] == state[row + 1][col] == state[row + 2][col] == state[row + 3][col] and state[row][col] == player:
@@ -83,18 +88,19 @@ class Minimax():
         # Check for a draw
         if 0 not in state[0]:
             return True
-        
+
         # Check for player 1 win
         if self.checkWinner(state, 1):
             return True
-        
+
         # Check for player 2 win
         if self.checkWinner(state, 2):
             return True
 
         return False
-    
+
     def getPossibleMoves(self, state):
+        # returns a list of all possible column index moves
         possible_moves = []
         for col in range(7):
             if state[0][col] == 0:
