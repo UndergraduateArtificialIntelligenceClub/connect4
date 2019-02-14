@@ -49,45 +49,31 @@
 \begin{document}
 \maketitle
 
-% \section{Cell Class}
-
-% This class is simply a cell on a connect 4 board where a token would be. It can only have 3 values:
-% \begin{itemize}
-%   \item 0: empty
-%   \item 1: player 1's token
-%   \item 2: player 2's token
-% \end{itemize}
-
-
-% The Class has the following methods:
-% \begin{lstlisting}[language=Python]
-% getState() # returns the integer value of the cell
-% printState() # returns a character representation of the cell: _, X, O
-% changeState() # changes the value of the cell only if it's has the value of 0 when called
-% \end{lstlisting}
-
 \section{Board Class}
 
 This class is the board, and where all the interaction will flow through. It has the following variables:
 \begin{itemize}
-  \item state: a 2d array of integers representing the current game state (6x7)
+  \item cells: a 2d array of integers representing the current game state (6x7)
   \item turn: dictates which player's turn it is
-  \item players: a list of length 2 which stores the player objects
+  \item characters: a dictionary for characters correspoding to an integer (0-2)
 \end{itemize}
 
 
 The Class has the following methods:
 \begin{lstlisting}[language=Python]
-show() # prints game state to terminal
-getBoard() # prints out a graphical representation of the board
+displayPlayer() # returns formatted of information of the current player's turn and their token character
+displayBoard() # prints out a graphical representation of the board
+getBoard() # returns the cells
 changeTurn() # alternates the turn between 1 and 2
+getTurn() # returns the current turn
 play() # takes as input the index of column and plays
-checkWin() # checks for possible win by calling the following four methods:
+isFull() # returns true if board is full
+restart() # resets the board for a new game
+checkWin() # checks for possible win by calling the following three methods:
 rowWin() # horizontal
 colWin() # vertical
 diagWin() # both diagonal directions
-restart() # resets the board for a new game
-isFull() # returns true if board is full
+colNotFull() # return a list of column indexes which are not full
 \end{lstlisting}
 
 \pagebreak
@@ -104,17 +90,26 @@ This class is an actual human player. The Class has the following methods:
 getInput() # asks for a play from the player and will only accept a valid response. Will ask again if necessary. 
 \end{lstlisting}
 
-\section{ComputerPlayer Class}
+\section{DumbBot Class}
 
-This class is the computer player, with various playing algorithms. It has the following variables:
+This class is the computer player, with a random algorithm. It has the following variables:
 \begin{itemize}
   \item difficulty: how smart or dumb this computer will play
 \end{itemize}
 
 The Class has the following methods:
 \begin{lstlisting}[language=Python]
-getPlayDumb() # will make a random move
-getPlaySmart() # tries to pick the best possible move
+getPlay() # tries to pick the best possible move
+\end{lstlisting}
+
+
+\section{SmartBot Class}
+
+This class is the computer player, with a minmax algorithm. It has no variables.
+
+The Class has the following method:
+\begin{lstlisting}[language=Python]
+getPlay() # picks a random move from a list of valid moves
 \end{lstlisting}
 
 \end{document}

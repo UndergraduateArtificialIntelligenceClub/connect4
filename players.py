@@ -6,4 +6,5 @@ class DumbBot():
         pass
 
     def play(self, colList):
+        # chooses a random column to play from the choices given
         return randint(0, len(colList) - 1)

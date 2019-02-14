@@ -4,7 +4,7 @@ from players import DumbBot
 b = Board()
 bot = DumbBot()
 
-# only for testing purposes
+# only for testing purposes at the moment
 while True:
     print('\n\n\n')
     b.displayPlayer()

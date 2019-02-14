@@ -19,6 +19,7 @@ class Board():
             print('\n', end='')
 
     def getBoard(self):
+        # returns the cells 2d array of the board
         return self.cells
 
     def changeTurn(self):
@@ -29,12 +30,16 @@ class Board():
             self.turn = 1
 
     def getTurn(self):
+        # returns the current turn
         return self.turn
 
     def play(self, column):
+        # this function will drop a token in a cell, given a column
         found = False
         row = len(self.cells) - 1
         while row >= 0 and not found:
+            # starts from the bottom row and keeps going
+            # upward until an empty cell is found
             cell = self.cells[row][column]
             if cell == 0:
                 self.cells[row][column] = self.turn
@@ -43,6 +48,7 @@ class Board():
                 row -= 1
 
     def isFull(self):
+        # returns a boolean of wether the board is full or not
         for row in self.cells:
             for col in row:
                 if col == 0:
@@ -56,9 +62,13 @@ class Board():
         self.cells = [[0 for i in range(7)] for j in range(6)]
 
     def checkWin(self):
+        # checks for win for horizontal, vertical and diagonal conditions
+        # returns True if a win is found
         return self.rowWin() or self.colWin() or self.diagWin()
 
     def rowWin(self):
+        # checks for horizontal wins
+        # returns True if a win is found
         for row in self.cells:
             for col in range(len(self.cells) - 3):
                 if row[col] == self.turn and row[col + 1] == self.turn and row[col + 2] == self.turn and row[col + 3] == self.turn:
@@ -66,14 +76,18 @@ class Board():
         return False
 
     def colWin(self):
+        # checks for vertical wins
+        # returns True if a win is found
         for col in range(len(self.cells[0])):
             for row in range(len(self.cells) - 3):
                 if self.cells[row][col] == self.turn and self.cells[row + 1][col] == self.turn and self.cells[row + 2][col] == self.turn and self.cells[row + 3][col] == self.turn:
                     return True
         return False
 
-    # Check diagonal wins, returns true if current player won, false otherwise
     def diagWin(self):
+        # checks for diagonal wins (both directions)
+        # returns True if a win is found
+
         # top-left to bottom-right
         for row in range(3):
             for col in range(4):
@@ -90,10 +104,13 @@ class Board():
         return False
 
     def colNotFull(self):
+        # returns a list of the column indexes that aren't full
         # True: full
         # False: not full
         notFullList = []
         for col in range(7):
+            # only checks for the top row since it can only
+            # be filled uo if the rest is also filled up
             if self.cells[0][col] == 0:
                 notFullList.append(col)
         return notFullList
