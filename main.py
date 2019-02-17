@@ -9,6 +9,7 @@ from players.minimax import MinimaxPlayer
 
 def main():
 
+    # clear terminal
     os.system("clear")
 
     # print game info
@@ -19,7 +20,7 @@ def main():
     print("   |                              |")
     print("   --------------------------------")
 
-    # get players
+    # get player 1
     print()
     print("   Select player 1 type:")
     print("   1. Human")
@@ -29,6 +30,7 @@ def main():
     choice = input()
     while choice not in ("1", "2", "3"):
         choice = input()
+
     if choice == "1":
         player1 = HumanPlayer()
     elif choice == "2":
@@ -36,6 +38,7 @@ def main():
     elif choice == "3":
         player1 = MinimaxPlayer()
 
+    # get player 2
     print()
     print("   Select player 2 type:")
     print("   1. Human")
@@ -45,6 +48,7 @@ def main():
     choice = input()
     while choice not in ("1", "2", "3"):
         choice = input()
+
     if choice == "1":
         player2 = HumanPlayer()
     elif choice == "2":
@@ -54,7 +58,16 @@ def main():
 
     board = Board(player1, player2)
 
-    board.playGame()
+    playAgain = "Y"
+    while playAgain == "Y":
+
+        # this actually plays the game
+        board.playGame()
+
+        print("   Play again? (Y/N)")
+        playAgain = input().upper()
+        while playAgain not in ("Y", "N"):
+            playAgain = input().upper()
 
 if __name__ == "__main__":
     main()

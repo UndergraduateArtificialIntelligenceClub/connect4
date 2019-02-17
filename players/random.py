@@ -2,6 +2,8 @@ from random import choice
 
 
 class RandomPlayer:
+    # this class will play a random valid move
+
     def __init__(self):
         pass
 

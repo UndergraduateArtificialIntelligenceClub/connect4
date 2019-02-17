@@ -2,50 +2,79 @@ import os
 
 class Board:
     def __init__(self, player1, player2):
-
-        # creates 7x6 connect4 list of cells
-        self.state = [[0 for i in range(7)] for j in range(6)]
+        # creates 7x6 2-dimensional array representing the game state
+        # cell = state[row][column]
+        self.state = [[0 for column in range(7)] for row in range(6)]
 
         # 1 = player 1 turn, 2 = player 2 turn
+        # player 1 starts
         self.turn = 1
 
+        # used when printing the board
         self.characters = [' ', 'X', 'O']
 
+        # player objects
         self.player1 = player1
         self.player2 = player2
 
+    
     def playGame(self):
+        # plays the game until a draw or win
+
+        # reset the board and turn
+        self.reset()
+
+        # game loop
         while True:
+            # clear terminal
             os.system("clear")
 
             self.displayBoard()
 
+            # check whether the game is over
             win = self.checkWin()
+
             if win == 0:
                 print("   Draw!")
                 print()
-                quit()
+                break
             elif win == 1:
                 print("   Player 1 wins!")
                 print()
-                quit()
+                break
             elif win == 2:
                 print("   Player 2 wins!")
                 print()
-                quit()
+                break
 
+            # game not over, so get the current player's move
             print("   Player {}'s turn.".format(self.turn))
 
+            # call the current player's play function 
+            # play functions are standardized for ease of adding new players
             if self.turn == 1:
                 move = self.player1.play(self.state)
             else:
                 move = self.player2.play(self.state)
 
+            # make the chosen move
             self.play(move)
 
             self.changeTurn()
 
     def displayBoard(self):
+        # prints out the board all pretty like
+        # ex: -----------------------------
+        #     | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+        #     -----------------------------
+        #     |   |   |   | O |   | X |   |
+        #     |   |   | X | O |   | O |   |
+        #     |   |   | X | X |   | X | O |
+        #     |   |   | O | X | O | O | X |
+        #     | O | X | O | X | O | O | O |
+        #     | X | O | X | O | X | X | X |
+        #     -----------------------------
+
         print()
         print("   -----------------------------   ")
         print("   | 1 | 2 | 3 | 4 | 5 | 6 | 7 |   ")
@@ -58,17 +87,9 @@ class Board:
         print("   -----------------------------   ")
         print()
 
-    def getState(self):
-        # returns the cells 2d array of the board
-        return self.state
-
     def changeTurn(self):
         # Changes the turn of the players
         self.turn = 3 - self.turn
-
-    def getTurn(self):
-        # returns the current turn
-        return self.turn
 
     def play(self, column):
         # this function will drop a token in a cell, given a column
@@ -80,15 +101,14 @@ class Board:
                 self.state[row][column] = self.turn
                 break
 
-    def isFull(self):
-        # returns a boolean of wether the board is full or not
-        for row in self.state:
-            for col in row:
-                if col == 0:
-                    return False
-        return True
-
     def checkWin(self):
+        # checks for wins or draws
+        # return values:
+        # -1 = game not over
+        # 0  = draw
+        # 1  = player 1 win
+        # 2  = player 2 win
+
         # check horizontal wins
         for row in range(6):
             for col in range(4):
@@ -120,8 +140,11 @@ class Board:
         # no win or draw
         return -1
 
-    def restart(self):
-        # player1 starts first
-        self.turn = 1
-        # resets 7x6 grid to all 0
+    def reset(self):
+        # resets the game
+
+        # creates 7x6 connect4 list of cells
         self.state = [[0 for i in range(7)] for j in range(6)]
+        # 1 = player 1 turn, 2 = player 2 turn
+        self.turn = 1
+    

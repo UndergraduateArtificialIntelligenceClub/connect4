@@ -1,4 +1,7 @@
 class HumanPlayer:
+    # represents a human player
+    # asks for and validates an input on which column to play (1-7)
+
     def __init__(self):
         pass
 

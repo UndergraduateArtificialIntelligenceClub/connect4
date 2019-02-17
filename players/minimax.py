@@ -1,8 +1,12 @@
 from copy import deepcopy
+from datetime import datetime
 
 
 class MinimaxPlayer:
-    # bot that uses minmax algorithm to play
+    # this class uses minmax algorithm to play the game 100% optimally
+    # as of 16/02/2019, the minimax function runs ~1000s of times per second 
+    # it is not nearly fast enough for real play, with billions of possible states at the start of the game
+
     def __init__(self):
         pass
 
@@ -120,8 +124,3 @@ class MinimaxPlayer:
             else:
                 row -= 1
 
-
-if __name__ == "__main__":
-    state = [[0 for i in range(7)] for j in range(6)]
-    minimax_player = Minimax(1)
-    print(minimax_player.play(state, 0))
