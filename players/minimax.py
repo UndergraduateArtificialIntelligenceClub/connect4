@@ -1,17 +1,7 @@
-from random import randint
 from copy import deepcopy
 
 
-class DumbBot():
-    def __init__(self):
-        pass
-
-    def play(self, colList):
-        # chooses a random column to play from the choices given
-        return randint(0, len(colList) - 1)
-
-
-class Minimax():
+class MinimaxPlayer():
     # bot that uses minmax algorithm to play
     def __init__(self, player):
         # to keep track how many times minimax function is called
