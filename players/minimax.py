@@ -1,4 +1,3 @@
-from copy import deepcopy
 from datetime import datetime
 
 
@@ -7,17 +6,41 @@ class MinimaxPlayer:
     # as of 16/02/2019, the minimax function runs ~1000s of times per second 
     # it is not nearly fast enough for real play, with billions of possible states at the start of the game
 
+    
     def __init__(self):
-        pass
+        # self.count = 0
+        # self.time = datetime.now()
+
+        self.possible_wins = [
+            # horizontal
+            [0,1,2,3],[1,2,3,4],[2,3,4,5],[3,4,5,6],[7,8,9,10],[8,9,10,11],[9,10,11,12],[10,11,12,13],
+            [14,15,16,17],[15,16,17,18],[16,17,18,19],[17,18,19,20],[21,22,23,24],[22,23,24,25],[23,24,25,26],[24,25,26,27],
+            [28,29,30,31],[29,30,31,32],[30,31,32,33],[31,32,33,34],[35,36,37,38],[36,37,38,39],[37,38,39,40],[38,39,40,41],
+            # vertical
+            [0,7,14,21],[7,14,21,28],[14,21,28,35],[1,8,15,22],[8,15,22,29],[15,22,29,36],[2,9,16,23],
+            [9,16,23,30],[16,23,30,37],[3,10,17,24],[10,17,24,31],[17,24,31,38],[4,11,18,25],[11,18,25,32],
+            [18,25,32,39],[5,12,19,26],[12,19,26,33],[19,26,33,40],[6,13,20,27],[13,20,27,34],[20,27,34,41],
+            # top-left to bottom-right diagonal
+            [0,8,16,24],[1,9,17,25],[2,10,18,26],[3,11,19,27],[7,15,23,31],[8,16,24,32],
+            [9,17,25,33],[10,18,26,34],[14,22,30,38],[15,23,31,39],[16,24,32,40],[17,25,33,41],
+            # bottom-left to top-right diagonal
+            [21,15,9,3],[22,16,10,4],[23,17,11,5],[24,18,12,6],[28,22,16,10],[29,23,17,11],
+            [30,24,18,12],[31,25,19,13],[35,29,23,17],[36,30,24,18],[37,31,25,19],[38,32,26,20]
+        ]
 
     def play(self, state):
+        
+        # self.time = datetime.now()
 
         depth = 0
         num_ones = 0
         num_twos = 0
 
+        flattened = []
+
         for row in state:
             for cell in row:
+                flattened.append(cell)
                 if cell == 1:
                     num_ones += 1
                     depth += 1
@@ -33,19 +56,24 @@ class MinimaxPlayer:
             self.player = 1
 
         # returns the best play returned by the Minimax algorithm
-        return self.minimax(state, depth, self.player, True)
+        return self.minimax(flattened, depth, self.player, True)
 
     def minimax(self, state, depth, turn, first_call):
 
-        if self.gameOver(state):
-            return self.calculateScore(state, depth)
+        # self.count += 1
+        # if (datetime.now() - self.time).total_seconds() > 0:
+        #     print(self.count / (datetime.now() - self.time).total_seconds())
+
+        result = self.checkWin(state)
+        if result != -1:
+            return self.calculateScore(result, depth)
 
         moves = self.getPossibleMoves(state)
         scores = []
 
         for move in moves:
 
-            new_state = self.getNewState(deepcopy(state), move, turn)
+            new_state = self.getNewState(list(state), move, turn)
 
             score = self.minimax(new_state, depth + 1, 3 - turn, False)
             scores.append(score)
@@ -60,67 +88,48 @@ class MinimaxPlayer:
         else:
             return scores[scores.index(min(scores))]
 
-    def calculateScore(self, state, depth):
-        if self.checkWinner(state, self.player):
+    def calculateScore(self, result, depth):
+        if result == self.player:
             return 100 - depth
-        elif self.checkWinner(state, 3 - self.player):
-            return depth - 100
-        else:
+        elif result == 0:
             return depth
+        else:
+            return depth - 100
 
-    def checkWinner(self, state, player):
-        for row in range(6):
-            for col in range(4):
-                if state[row][col] == state[row][col + 1] == state[row][col + 2] == state[row][col + 3] and state[row][col] == player:
-                    return True
+    def checkWin(self, state):
+        # checks for wins or draws
+        # return values:
+        # -1 = game not over
+        # 0  = draw
+        # 1  = player 1 win
+        # 2  = player 2 win
 
-        for col in range(7):
-            for row in range(3):
-                if state[row][col] == state[row + 1][col] == state[row + 2][col] == state[row + 3][col] and state[row][col] == player:
-                    return True
-
-        for row in range(3):
-            for col in range(4):
-                if state[row][col] == state[row + 1][col + 1] == state[row + 2][col + 2] == state[row + 3][col + 3] and state[row][col] == player:
-                    return True
-
-        for row in range(3):
-            for col in range(6, 2, -1):
-                if state[row][col] == state[row + 1][col - 1] == state[row + 2][col - 2] == state[row + 3][col - 3] and state[row][col] == player:
-                    return True
-
-        return False
-
-    def gameOver(self, state):
-        # Check for a draw
-        if 0 not in state[0]:
-            return True
-
-        # Check for player 1 win
-        if self.checkWinner(state, 1):
-            return True
-
-        # Check for player 2 win
-        if self.checkWinner(state, 2):
-            return True
-
-        return False
+        for win in self.possible_wins:
+            if state[win[0]] != 0 and state[win[0]] == state[win[1]] == state[win[2]] == state[win[3]]:
+                return state[win[0]]
+            
+        # check draw
+        if 0 not in state[0:7]:
+            return 0
+        
+        # no win or draw
+        return -1
 
     def getPossibleMoves(self, state):
         # returns a list of all possible column index moves
         possible_moves = []
         for col in range(7):
-            if state[0][col] == 0:
+            if state[col] == 0:
                 possible_moves.append(col)
         return possible_moves
 
     def getNewState(self, state, move, turn):
-        row = 5
-        while row >= 0:
-            cell = state[row][move]
+        pos = move + 35
+        while pos >= 0:
+            cell = state[pos]
             if cell == 0:
-                state[row][move] = turn
+                state[pos] = turn
                 return state
             else:
-                row -= 1
+                pos -= 7
 
