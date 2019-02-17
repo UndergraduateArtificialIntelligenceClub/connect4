@@ -1,21 +1,37 @@
 from copy import deepcopy
 
 
-class MinimaxPlayer():
+class MinimaxPlayer:
     # bot that uses minmax algorithm to play
-    def __init__(self, player):
-        # to keep track how many times minimax function is called
-        self.count = 0
-        # variable to know which player bot is
-        self.player = player
+    def __init__(self):
+        pass
 
-    def play(self, state, depth):
+    def play(self, state):
+
+        depth = 0
+        num_ones = 0
+        num_twos = 0
+
+        for row in state:
+            for cell in row:
+                if cell == 1:
+                    num_ones += 1
+                    depth += 1
+                elif cell == 2:
+                    num_twos += 1
+                    depth += 1
+        
+        depth = num_ones + num_twos
+
+        if num_ones > num_twos:
+            self.player = 2
+        elif num_ones == num_twos:
+            self.player = 1
+
         # returns the best play returned by the Minimax algorithm
         return self.minimax(state, depth, self.player, True)
 
     def minimax(self, state, depth, turn, first_call):
-        self.count += 1
-        print(self.count)
 
         if self.gameOver(state):
             return self.calculateScore(state, depth)
@@ -24,9 +40,6 @@ class MinimaxPlayer():
         scores = []
 
         for move in moves:
-
-            if self.gameOver(state):
-                print("This shouldn't happen")
 
             new_state = self.getNewState(deepcopy(state), move, turn)
 

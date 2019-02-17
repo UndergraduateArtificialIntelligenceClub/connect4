@@ -1,6 +1,6 @@
 import os
 
-class Board():
+class Board:
     def __init__(self, player1, player2):
 
         # creates 7x6 connect4 list of cells

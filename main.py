@@ -1,3 +1,5 @@
+import os
+
 from game.game import Board
 
 from players.human import HumanPlayer
@@ -6,6 +8,9 @@ from players.minimax import MinimaxPlayer
 
 
 def main():
+
+    os.system("clear")
+
     # print game info
     print()
     print("   --------------------------------")
