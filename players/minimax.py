@@ -8,8 +8,11 @@ class MinimaxPlayer:
 
     
     def __init__(self):
-        # self.count = 0
-        # self.time = datetime.now()
+        
+        self.trackTime = True
+        if self.trackTime:
+            self.count = 0
+            self.time = datetime.now()
 
         self.possible_wins = [
             # horizontal
@@ -30,7 +33,9 @@ class MinimaxPlayer:
 
     def play(self, state):
         
-        # self.time = datetime.now()
+        if self.trackTime:
+            self.count = 0
+            self.time = datetime.now()
 
         depth = 0
         num_ones = 0
@@ -60,9 +65,10 @@ class MinimaxPlayer:
 
     def minimax(self, state, depth, turn, first_call):
 
-        # self.count += 1
-        # if (datetime.now() - self.time).total_seconds() > 0:
-        #     print(self.count / (datetime.now() - self.time).total_seconds())
+        if self.trackTime:
+            self.count += 1
+            if self.count % 100000 == 0 and (datetime.now() - self.time).total_seconds() > 0:
+                print("Minimax calls per second: {}".format(self.count / (datetime.now() - self.time).total_seconds()))
 
         result = self.checkWin(state)
         if result != -1:
@@ -79,8 +85,12 @@ class MinimaxPlayer:
             scores.append(score)
 
         if first_call:
-            print(moves)
-            print(scores)
+            # print info the choices
+            print()
+            for i in range(len(moves)):
+                print("Column={}, Score={}".format(moves[i] + 1, scores[i]))
+            print("Choice={}".format(moves[scores.index(max(scores))] + 1))
+
             return moves[scores.index(max(scores))]
 
         if turn == self.player:
