@@ -29,6 +29,7 @@ def main():
 
     choice = input()
     while choice not in ("1", "2", "3"):
+        print("  invalid input, please try again")
         choice = input()
 
     if choice == "1":
@@ -47,6 +48,7 @@ def main():
 
     choice = input()
     while choice not in ("1", "2", "3"):
+        print("  invalid input, please try again")
         choice = input()
 
     if choice == "1":
