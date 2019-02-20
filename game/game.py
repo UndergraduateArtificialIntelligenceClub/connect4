@@ -46,16 +46,13 @@ class Board:
             win = self.checkWin()
 
             if win == 0:
-                print("   Draw!")
-                print()
+                print("   Draw!\n")
                 break
             elif win == 1:
-                print("   Player 1 wins!")
-                print()
+                print("   Player 1 wins!\n")
                 break
             elif win == 2:
-                print("   Player 2 wins!")
-                print()
+                print("   Player 2 wins!\n")
                 break
 
             # game not over, so get the current player's move
