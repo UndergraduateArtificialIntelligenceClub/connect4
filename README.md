@@ -3,7 +3,7 @@ Connect 4 Terminal Game Documentation
 ### Contributors
 + Giancarlo Pernudi Segura
 + Will Fenton
-+ Paul Saunder
++ Paul Saunders
 
 This connect 4 game is part of the Undergraduate Artificial Intelligence Society at the University of Alberta. It is licensed under the **GNU GENERAL PUBLIC LICENSE**.
 
