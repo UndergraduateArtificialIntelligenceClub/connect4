@@ -4,8 +4,12 @@ class NeuroNet():
     def __init__(self, layers):
         self.layers = []
         for l in layers:
-            assert l % 1 == 0, "%d is not an integer" % l
-            self.layers.append([0.0 for x in range(l)])
+            try:
+                assert l % 1 == 0, "%d is not an integer" % l
+            except Exception as e:
+                print(e.args[0])
+            else:
+                self.layers.append([0.0 for x in range(l)])
 
 
     def sum(self, layer):
