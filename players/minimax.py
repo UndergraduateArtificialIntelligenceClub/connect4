@@ -48,10 +48,8 @@ class MinimaxPlayer:
                 flattened.append(cell)
                 if cell == 1:
                     num_ones += 1
-                    depth += 1
                 elif cell == 2:
                     num_twos += 1
-                    depth += 1
         
         depth = num_ones + num_twos
 
