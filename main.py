@@ -22,7 +22,7 @@ def main():
 
     # get player 1
     print()
-    print("   Select player 1 type:")
+    print("   Select player 1 type (1, 2, 3):")
     print("   1. Human")
     print("   2. Random")
     print("   3. Minimax")
