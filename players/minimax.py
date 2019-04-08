@@ -6,7 +6,7 @@ class MinimaxPlayer:
     # as of 16/02/2019, the minimax function runs ~1000s of times per second 
     # it is not nearly fast enough for real play, with billions of possible states at the start of the game
 
-    
+
     def __init__(self):
         
         self.trackTime = True
@@ -142,4 +142,3 @@ class MinimaxPlayer:
                 return state
             else:
                 pos -= 7
-
