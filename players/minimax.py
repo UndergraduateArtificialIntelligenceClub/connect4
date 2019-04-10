@@ -38,6 +38,7 @@ class MinimaxPlayer:
             self.time = datetime.now()
 
         depth = 0
+        maxLevel = 1
         num_ones = 0
         num_twos = 0
 
@@ -61,42 +62,22 @@ class MinimaxPlayer:
             self.player = 1
 
         # returns the best play returned by the Minimax algorithm
-        return self.minimax(flattened, depth, self.player, True)
+        return self.minimax(flattened, 0, maxLevel, self.player, True)[0]
 
-    def minimax(self, state, depth, turn, first_call):
-
-        if self.trackTime:
-            self.count += 1
-            if self.count % 100000 == 0 and (datetime.now() - self.time).total_seconds() > 0:
-                print("Minimax calls per second: {}".format(self.count / (datetime.now() - self.time).total_seconds()))
-
-        result = self.checkWin(state)
-        if result != -1:
-            return self.calculateScore(result, depth)
-
-        moves = self.getPossibleMoves(state)
-        scores = []
-
-        for move in moves:
-
-            new_state = self.getNewState(list(state), move, turn)
-
-            score = self.minimax(new_state, depth + 1, 3 - turn, False)
-            scores.append(score)
-
-        if first_call:
-            # print info the choices
-            print()
-            for i in range(len(moves)):
-                print("Column={}, Score={}".format(moves[i] + 1, scores[i]))
-            print("Choice={}".format(moves[scores.index(max(scores))] + 1))
-
-            return moves[scores.index(max(scores))]
-
-        if turn == self.player:
-            return scores[scores.index(max(scores))]
-        else:
-            return scores[scores.index(min(scores))]
+    def minimax(self, state, depth, maxLevel, turn, first_call):
+        print('depth:', depth)
+        if depth == maxLevel:
+            result = self.checkWin(state)
+            if result in (1, 2):
+                return 1
+            else:
+                return 0
+        moves = []
+        for move in self.getPossibleMoves(state):
+            new_state = self.getNewState(state, move, turn)
+            moves.append((move, self.minimax(new_state, depth + 1, maxLevel, 3 - turn, first_call)))
+        print('max move:', max(moves, key=lambda x:x[1]))
+        return max(moves, key=lambda x:x[1])
 
     def calculateScore(self, result, depth):
         if result == self.player:
@@ -117,11 +98,11 @@ class MinimaxPlayer:
         for win in self.possible_wins:
             if state[win[0]] != 0 and state[win[0]] == state[win[1]] == state[win[2]] == state[win[3]]:
                 return state[win[0]]
-            
+
         # check draw
         if 0 not in state[0:7]:
             return 0
-        
+
         # no win or draw
         return -1
 
@@ -134,9 +115,11 @@ class MinimaxPlayer:
         return possible_moves
 
     def getNewState(self, state, move, turn):
+        # makes a play and returns the new state
         pos = move + 35
         while pos >= 0:
             cell = state[pos]
+            # if empty
             if cell == 0:
                 state[pos] = turn
                 return state
